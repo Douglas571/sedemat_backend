@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pagos",
+  "info": {
+    "singularName": "pago",
+    "pluralName": "pagos",
+    "displayName": "Pago"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "referencia": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "default": 0
+    },
+    "monto": {
+      "type": "decimal"
+    },
+    "liquidacion": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::liquidacion.liquidacion",
+      "mappedBy": "pago"
+    }
+  }
+}

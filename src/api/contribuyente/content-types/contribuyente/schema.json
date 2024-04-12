@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contribuyentes",
+  "info": {
+    "singularName": "contribuyente",
+    "pluralName": "contribuyentes",
+    "displayName": "Contribuyente",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "razon_social": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "rif": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 15
+    },
+    "referencia": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::liquidacion.liquidacion",
+      "inversedBy": "pago_2s"
+    }
+  }
+}
