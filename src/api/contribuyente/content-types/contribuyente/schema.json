@@ -8,13 +8,13 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "razon_social": {
       "type": "string",
-      "required": true,
+      "required": false,
       "unique": true
     },
     "rif": {
@@ -23,11 +23,11 @@
       "unique": true,
       "maxLength": 15
     },
-    "referencia": {
+    "contacto": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::liquidacion.liquidacion",
-      "inversedBy": "pago_2s"
+      "relation": "oneToOne",
+      "target": "api::contacto.contacto",
+      "inversedBy": "contribuyente"
     }
   }
 }

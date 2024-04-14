@@ -20,12 +20,6 @@
     },
     "identificador": {
       "type": "uid"
-    },
-    "pago_2s": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::contribuyente.contribuyente",
-      "mappedBy": "referencia"
     }
   }
 }

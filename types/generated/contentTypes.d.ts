@@ -788,6 +788,44 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiContactoContacto extends Schema.CollectionType {
+  collectionName: 'contactos';
+  info: {
+    singularName: 'contacto';
+    pluralName: 'contactos';
+    displayName: 'Contacto';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cedula: Attribute.BigInteger & Attribute.Required & Attribute.Unique;
+    primer_nombre: Attribute.String & Attribute.Required;
+    primer_apellido: Attribute.String & Attribute.Required;
+    correo: Attribute.Email & Attribute.Required;
+    contribuyente: Attribute.Relation<
+      'api::contacto.contacto',
+      'oneToOne',
+      'api::contribuyente.contribuyente'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contacto.contacto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contacto.contacto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiContribuyenteContribuyente extends Schema.CollectionType {
   collectionName: 'contribuyentes';
   info: {
@@ -797,24 +835,23 @@ export interface ApiContribuyenteContribuyente extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    razon_social: Attribute.String & Attribute.Required & Attribute.Unique;
+    razon_social: Attribute.String & Attribute.Unique;
     rif: Attribute.String &
       Attribute.Required &
       Attribute.Unique &
       Attribute.SetMinMaxLength<{
         maxLength: 15;
       }>;
-    referencia: Attribute.Relation<
+    contacto: Attribute.Relation<
       'api::contribuyente.contribuyente',
-      'manyToOne',
-      'api::liquidacion.liquidacion'
+      'oneToOne',
+      'api::contacto.contacto'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::contribuyente.contribuyente',
       'oneToOne',
@@ -848,11 +885,6 @@ export interface ApiLiquidacionLiquidacion extends Schema.CollectionType {
       'api::pago.pago'
     >;
     identificador: Attribute.UID;
-    pago_2s: Attribute.Relation<
-      'api::liquidacion.liquidacion',
-      'oneToMany',
-      'api::contribuyente.contribuyente'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -920,6 +952,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::contacto.contacto': ApiContactoContacto;
       'api::contribuyente.contribuyente': ApiContribuyenteContribuyente;
       'api::liquidacion.liquidacion': ApiLiquidacionLiquidacion;
       'api::pago.pago': ApiPagoPago;
