@@ -34,7 +34,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::contribuyente.contribuyente",
-      "mappedBy": "contacto"
+      "inversedBy": "contacto"
     }
   }
 }
