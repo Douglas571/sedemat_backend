@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tipo_de_vehiculos",
+  "info": {
+    "singularName": "tipo-de-vehiculo",
+    "pluralName": "tipo-de-vehiculos",
+    "displayName": "Tipo de Vehiculo",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tipo": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "tcmmv_bcv": {
+      "type": "float",
+      "min": 0
+    }
+  }
+}

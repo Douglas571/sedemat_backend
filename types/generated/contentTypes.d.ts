@@ -695,7 +695,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -723,6 +722,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    contacto: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::contacto.contacto'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -934,6 +938,95 @@ export interface ApiPagoPago extends Schema.CollectionType {
   };
 }
 
+export interface ApiPatenteDeVehiculoPatenteDeVehiculo
+  extends Schema.CollectionType {
+  collectionName: 'patente_de_vehiculos';
+  info: {
+    singularName: 'patente-de-vehiculo';
+    pluralName: 'patente-de-vehiculos';
+    displayName: 'Patente de vehiculo';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    placa: Attribute.String & Attribute.Required & Attribute.Unique;
+    modelo: Attribute.String & Attribute.Required;
+    marca: Attribute.String & Attribute.Required;
+    color: Attribute.String & Attribute.Required;
+    uso: Attribute.String & Attribute.Required;
+    year: Attribute.Integer & Attribute.Required;
+    realizado_por: Attribute.String & Attribute.Required;
+    verificado_por: Attribute.String & Attribute.Required;
+    concepto: Attribute.String;
+    expedicion: Attribute.Date;
+    monto: Attribute.Float & Attribute.Required;
+    tipo_de_vehiculo: Attribute.Relation<
+      'api::patente-de-vehiculo.patente-de-vehiculo',
+      'oneToOne',
+      'api::tipo-de-vehiculo.tipo-de-vehiculo'
+    >;
+    contribuyente: Attribute.Relation<
+      'api::patente-de-vehiculo.patente-de-vehiculo',
+      'oneToOne',
+      'api::contribuyente.contribuyente'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::patente-de-vehiculo.patente-de-vehiculo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::patente-de-vehiculo.patente-de-vehiculo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTipoDeVehiculoTipoDeVehiculo extends Schema.CollectionType {
+  collectionName: 'tipo_de_vehiculos';
+  info: {
+    singularName: 'tipo-de-vehiculo';
+    pluralName: 'tipo-de-vehiculos';
+    displayName: 'Tipo de Vehiculo';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    tipo: Attribute.String & Attribute.Required & Attribute.Unique;
+    tcmmv_bcv: Attribute.Float &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::tipo-de-vehiculo.tipo-de-vehiculo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::tipo-de-vehiculo.tipo-de-vehiculo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -956,6 +1049,8 @@ declare module '@strapi/types' {
       'api::contribuyente.contribuyente': ApiContribuyenteContribuyente;
       'api::liquidacion.liquidacion': ApiLiquidacionLiquidacion;
       'api::pago.pago': ApiPagoPago;
+      'api::patente-de-vehiculo.patente-de-vehiculo': ApiPatenteDeVehiculoPatenteDeVehiculo;
+      'api::tipo-de-vehiculo.tipo-de-vehiculo': ApiTipoDeVehiculoTipoDeVehiculo;
     }
   }
 }
